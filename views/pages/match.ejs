@@ -12,13 +12,36 @@
 	<main>
 		<div class="mainContent">
 			<h1>Your Match</h1>
-			Coming Soon
+			<div id="matchInfo">
+				<p>No match? Take the <a href="/">Friend Finder Quiz</a>!</p>
+				<p id="userHere"></p>
+				<!-- User Data and Match populate here -->
+			</div>
 		</div>
 	</main>
 
 	<footer>
 		<% include ../partials/footer %>
 	</footer>
+	<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		var name = window.location.href.split('/match/')[1];
 	
-</body>
+		$.ajax({
+			url: '/match/' + name,
+			method: 'GET'
+		}).then(function(data){
+			var email = data.email;
+
+			$('#userHere').text('username: ' + name);
+			$('#userHere').append('<BR>' + JSON.stringify(data.email));
+	
+			// $('form').attr('action', '/update/' + id + '?_method=PUT');
+	
+			console.log(data);
+		});
+	</script></body>
 </html>

@@ -36,6 +36,14 @@ app.get('/questionsData', function(req, res){
     });
 });
 
+app.get('/compareData/:user', function(req, res){
+    connection.query("SELECT * FROM users WHERE user = ?", req.params.user, function(error, results, body) {
+        if (error) throw error;
+	    res.json(results);
+    });
+});
+
+
 // gets user data
 app.get('/users', function(req, res) {
 	connection.query(
@@ -50,7 +58,8 @@ app.get('/users', function(req, res) {
 app.post('/submit', function(req, res){
 		var answers = [];
 		var answersString;
-		
+		var id;
+
 		console.log(req);
 
 		answers.push(req.body.ans1);
@@ -71,22 +80,22 @@ app.post('/submit', function(req, res){
 		connection.query(
 		"INSERT INTO users SET user = ?, email = ?, answers = ?", [req.body.user, req.body.email, answersString], 
 		function(error, results, body) {
-        if (error) throw error;
-		res.redirect('/');
+		if (error) throw error;
+		res.redirect('/match/' + req.body.user);
 	});
 });
 
-// about page
-app.get('/about', function(req, res) {
-	res.render('pages/about');
-});
-
-// profile page
-app.get('/profile', function(req, res) {
-	res.render('pages/profile');
-});
-
 // your match page
+app.get('/match/:user', function(req, res) {
+	res.render('pages/match');
+	connection.query(
+		"SELECT * FROM users WHERE user = ?", [req.params.user], 
+		function(error, results, body) {
+		if (error) throw error;
+		console.log(results)
+	});
+});
+
 app.get('/match', function(req, res) {
 	res.render('pages/match');
 });
