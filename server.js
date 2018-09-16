@@ -36,11 +36,21 @@ app.get('/questionsData', function(req, res){
     });
 });
 
+// gets user data
+app.get('/users', function(req, res) {
+	connection.query(
+		"SELECT * FROM users", function(error, results, body) {
+        if (error) throw error;
+	    res.json(results);
+	});
+});
+
 // posts answers to mysql db
-var answers = [];
 
 app.post('/submit', function(req, res){
-
+		var answers = [];
+		var answersString;
+		
 		console.log(req);
 
 		answers.push(req.body.ans1);
@@ -54,14 +64,17 @@ app.post('/submit', function(req, res){
 		answers.push(req.body.ans9);
 		answers.push(req.body.ans10);
 
+		answersString = JSON.stringify(answers);
+		answersString = answersString.replace(/"/gi, '').replace(/,/gi, '');
+		console.log(answersString);
+
 		connection.query(
-		"INSERT INTO users SET user = ?, email = ?, answers = ?", [req.body.user, req.body.email, JSON.stringify(answers)], 
+		"INSERT INTO users SET user = ?, email = ?, answers = ?", [req.body.user, req.body.email, answersString], 
 		function(error, results, body) {
         if (error) throw error;
 		res.redirect('/');
 	});
 });
-
 
 // about page
 app.get('/about', function(req, res) {
