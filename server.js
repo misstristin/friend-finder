@@ -40,8 +40,22 @@ app.get('/questionsData', function(req, res){
 var answers = [];
 
 app.post('/submit', function(req, res){
+
+		console.log(req);
+
+		answers.push(req.body.ans1);
+		answers.push(req.body.ans2);
+		answers.push(req.body.ans3);
+		answers.push(req.body.ans4);
+		answers.push(req.body.ans5);
+		answers.push(req.body.ans6);
+		answers.push(req.body.ans7);
+		answers.push(req.body.ans8);
+		answers.push(req.body.ans9);
+		answers.push(req.body.ans10);
+
 		connection.query(
-		"INSERT INTO users SET user = ?, email = ?", [req.body.user, req.body.email], 
+		"INSERT INTO users SET user = ?, email = ?, answers = ?", [req.body.user, req.body.email, JSON.stringify(answers)], 
 		function(error, results, body) {
         if (error) throw error;
 		res.redirect('/');

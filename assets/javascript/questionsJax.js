@@ -12,7 +12,7 @@ $.ajax({
         
         // make select field
         select = $('<select>');
-        select.attr('name', number)
+        select.attr('name', 'ans' + number);
 
         // make options for each question
         option0 = $('<option>');
