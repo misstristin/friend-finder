@@ -1,0 +1,23 @@
+DROP DATABASE IF EXISTS friendfinder;
+
+CREATE DATABASE friendfinder;
+
+USE friendfinder;
+
+CREATE TABLE users(
+id INT NOT NULL AUTO_INCREMENT,
+user VARCHAR(255),
+email VARCHAR(255),
+answers VARCHAR(255),
+PRIMARY KEY (id)
+);
+
+CREATE TABLE questions(
+id INT NOT NULL AUTO_INCREMENT,
+question VARCHAR(500) NOT NULL,
+PRIMARY KEY (id)
+);
+
+
+
+

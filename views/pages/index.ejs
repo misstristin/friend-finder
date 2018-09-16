@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body>
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<main>
+		<div class="mainContent">
+			<h1>Friend Finder</h1>
+				<form method="POST" action="/submit">
+					<p>Name: <input type="text" placeholder="Enter your name." name="user"></p>
+					<p>Email Address: <input type="text" placeholder="Enter your email." name="email"></p>
+					
+					<div id="questionsHere">
+						<!-- questions populate here -->
+					</div>
+				<button type="submit" id="sumbit">Find your soul-buddy</button>
+				</form>
+		</div>
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+		<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>
+		<script src="/javascript/questionsJax.js"></script>
+</body>
+</html>
