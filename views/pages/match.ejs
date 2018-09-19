@@ -22,22 +22,28 @@
 	<footer>
 		<% include ../partials/footer %>
 	</footer>
+	<!-- jquery here -->
 	<script
 	src="https://code.jquery.com/jquery-3.3.1.min.js"
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	crossorigin="anonymous"></script>
+
+	<!-- link to compare javascript -->
+	<script src="/javascript/compare.js"></script>
+
+	<!-- ajax call for data on page -->
 	<script type="text/javascript">
 		var windowName = window.location.href.split('/match/')[1];
-		var userName = name.split('/')[0];
-		var answers = name.split('/')[1];
-		console.log(userName +  answers);
-	
+		var userName = windowName.split('/')[0];
+		var answers = windowName.split('/')[1];
+		// console.log(userName +  answers);
+
 		$.ajax({
 			url: '/match/' + windowName,
 			method: 'GET'
 		}).then(function(data){
 			console.log(data);
-			$('#matchInfo').html('username: ' + userName + '<BR>answers: ' + answers + '<BR>your best bud: ');		
+			$('#matchInfo').html('Well ' + userName + ', the numbers are in!<BR>Your Scores: ' + answers + '<BR>Your Best Bud is: ');		
 			console.log(data);
 		});
 	</script>
