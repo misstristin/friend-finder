@@ -36,6 +36,7 @@ app.get('/questionsData', function(req, res){
     });
 });
 
+// gets all data for one user
 app.get('/compareData/:user', function(req, res){
     connection.query("SELECT * FROM users WHERE user = ?", req.params.user, function(error, results, body) {
         if (error) throw error;
@@ -43,8 +44,7 @@ app.get('/compareData/:user', function(req, res){
     });
 });
 
-
-// gets user data
+// gets all user data
 app.get('/users', function(req, res) {
 	connection.query(
 		"SELECT * FROM users", function(error, results, body) {

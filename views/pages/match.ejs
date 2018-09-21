@@ -16,6 +16,9 @@
 				<p>No match? Take the <a href="/">Friend Finder Quiz</a>!</p>
 				<!-- User Data and Match populate here -->
 			</div>
+			<span id="matchAnswers">
+				<!-- match data populates here -->
+			</span>
 		</div>
 	</main>
 
@@ -29,23 +32,55 @@
 	crossorigin="anonymous"></script>
 
 	<!-- link to compare javascript -->
-	<script src="/javascript/compare.js"></script>
+	<!-- <script src="/javascript/compare.js"></script> -->
+
+	<!-- link to compareJax javascript -->
+	<!-- <script src="/javascript/compareJax.js"></script> -->
 
 	<!-- ajax call for data on page -->
 	<script type="text/javascript">
 		var windowName = window.location.href.split('/match/')[1];
 		var userName = windowName.split('/')[0];
 		var answers = windowName.split('/')[1];
-		// console.log(userName +  answers);
-
+		
 		$.ajax({
 			url: '/match/' + windowName,
 			method: 'GET'
 		}).then(function(data){
 			console.log(data);
-			$('#matchInfo').html('Well ' + userName + ', the numbers are in!<BR>Your Scores: ' + answers + '<BR>Your Best Bud is: ');		
+			
+			$('#matchInfo').html('Well ' + userName + ', the numbers are in!<BR>Your Scores: ' + answers + '<BR>Your Best Bud is: ');
+	
 			console.log(data);
 		});
+
+		$.ajax({
+			url: '/users',
+			method: 'GET'
+		}).then(function(data){
+
+			// gets data for all users except the last one (current user)
+
+			var p, id, answers, matchName;
+			for (i=0; i<data.length - 1; i++){
+			user = data[i].user;
+			id = i + 1;
+			answers = data[i].answers;
+			console.log(user);
+				for (var j=0; j<answers.length; j++){
+					console.log(answers[j]);
+				}
+
+			// checks to see which is the closest answers
+			
+
+			// adds match data to page
+			$('#matchAnswers').text(matchName);
+		}
+       
+    
+});
+
 	</script>
 	</body>
 </html>
