@@ -4,7 +4,6 @@
 	<% include ../partials/head %>
 </head>
 <body>
-
 	<header>
 		<% include ../partials/header %>
 	</header>
@@ -41,7 +40,7 @@
 	<script type="text/javascript">
 		var windowName = window.location.href.split('/match/')[1];
 		var userName = windowName.split('/')[0];
-		var answers = windowName.split('/')[1];
+		var userAnswers = windowName.split('/')[1];
 		
 		$.ajax({
 			url: '/match/' + windowName,
@@ -49,7 +48,7 @@
 		}).then(function(data){
 			console.log(data);
 			
-			$('#matchInfo').html('Well ' + userName + ', the numbers are in!<BR>Your Scores: ' + answers + '<BR>Your Best Bud is: ');
+			$('#matchInfo').html('Well ' + userName + ', the numbers are in!<BR>Your Scores: ' + userAnswers + '<BR><BR>Your Best Bud is: ');
 	
 			console.log(data);
 		});
@@ -62,21 +61,40 @@
 			// gets data for all users except the last one (current user)
 
 			var p, id, answers, matchName;
+			var finalDifferences = [];
+
 			for (i=0; i<data.length - 1; i++){
-			user = data[i].user;
-			id = i + 1;
-			answers = data[i].answers;
-			console.log(user);
-				for (var j=0; j<answers.length; j++){
-					console.log(answers[j]);
-				}
+				otherUsers = data[i].user;
+				id = i + 1;
+				answers = data[i].answers;
+				console.log(otherUsers);
 
 			// checks to see which is the closest answers
+			var diffArray = [];
+
+				for (var j=0; j<answers.length; j++){
+					var difference = 0;
+					difference += (Math.abs(answers[j] - userAnswers[j]));
+					diffArray.push(difference);
+					console.log(diffArray);
+					
+					var diffSum = 0;
+					for (var k=0; k<diffArray.length; k++){
+						diffSum = diffSum + diffArray[k];
+					}
+				}
+			finalDifferences.push(diffSum);
+			}
 			
+			var min = Math.min.apply(Math, finalDifferences)
+			var minPosition = finalDifferences.indexOf(min);
+			var matchName = data[minPosition].user;
+			var matchEmail = data[minPosition].email;
 
 			// adds match data to page
-			$('#matchAnswers').text(matchName);
-		}
+			console.log('Final differences: ' + finalDifferences + ' & Final lowest score: ' + min + ', which is at position ' + minPosition + ' ...and your match is... ' + matchName);
+
+			$('#matchAnswers').html(matchName + '<BR>' + matchEmail);
        
     
 });
